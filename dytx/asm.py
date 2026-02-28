@@ -220,3 +220,8 @@ def encode_instruction(mnemonic):
     # TODO: implement a mini Thumb-2 assembler
     print(f"[DYTX:asm] encode_instruction('{mnemonic}') is a stub. Full assembler not yet implemented.")
     return None
+
+
+# ── Convenience alias: exec() → exec_directive() ─────────────────────────────────────────────
+# Allows proof_of_work files to call dxa.exec('FADD ...') directly.
+exec = exec_directive
