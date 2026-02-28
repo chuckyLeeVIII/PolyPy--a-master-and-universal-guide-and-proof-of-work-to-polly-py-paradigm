@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PolyPi Pure — PolyPy DYTX Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <h1 class="logo">◆ PolyPi <span class="accent">Pure</span></h1>
+      <span class="badge">v1.0</span>
+      <nav class="nav">
+        <a href="/api/docs" target="_blank">API Docs</a>
+        <a href="https://github.com/chuckyLeeVIII/PolyPy--a-master-and-universal-guide-and-proof-of-work-to-polly-py-paradigm" target="_blank">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- Runtime Status Card -->
+    <section class="card" id="card-runtime">
+      <h2>DYTX Runtime Status</h2>
+      <pre id="runtime-info" class="code-block">Loading…</pre>
+      <button class="btn" id="btn-refresh-runtime">Refresh</button>
+    </section>
+
+    <!-- Proofs of Work -->
+    <section class="card" id="card-proofs">
+      <h2>Proof of Work</h2>
+      <p class="sub">Execute any PolyPy proof in pure Python simulation mode (no hardware needed).</p>
+      <div class="proof-grid" id="proof-grid">
+        <!-- Filled by JS -->
+      </div>
+    </section>
+
+    <!-- Output console -->
+    <section class="card" id="card-console">
+      <h2>Console Output</h2>
+      <pre id="console-output" class="code-block console">Run a proof above to see output here…</pre>
+      <button class="btn btn-secondary" id="btn-clear">Clear</button>
+    </section>
+
+    <!-- Re-init runtime -->
+    <section class="card" id="card-init">
+      <h2>Re-init Runtime</h2>
+      <div class="form-row">
+        <label>Mode
+          <select id="sel-mode">
+            <option value="python" selected>python</option>
+            <option value="micropython">micropython</option>
+          </select>
+        </label>
+        <label>IDE
+          <select id="sel-ide">
+            <option value="pure" selected>pure</option>
+            <option value="thonny">thonny</option>
+          </select>
+        </label>
+        <label>Target
+          <select id="sel-target">
+            <option value="" selected>none</option>
+            <option value="rp2040">rp2040</option>
+            <option value="generic">generic</option>
+            <option value="esp32">esp32</option>
+            <option value="esp8266">esp8266</option>
+          </select>
+        </label>
+        <button class="btn" id="btn-init">Init</button>
+      </div>
+      <pre id="init-result" class="code-block" style="min-height:3rem;"></pre>
+    </section>
+  </main>
+
+  <footer class="footer">
+    PolyPi Pure v1.0 &mdash; PolyPy / chuckyLeeVIII &mdash; MIT License
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
