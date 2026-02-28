@@ -1,3 +1,67 @@
+# ◆ PolyPi Pure v1.0 — Official Release
+
+> **PolyPi Pure** is the fullstack release of the PolyPy paradigm.
+> Run every proof-of-work in standard Python (no hardware required), serve a live dashboard, and call the DYTX runtime via a REST API — all from this single repository.
+
+[![PolyPi Pure CI](https://github.com/chuckyLeeVIII/PolyPy--a-master-and-universal-guide-and-proof-of-work-to-polly-py-paradigm/actions/workflows/ci.yml/badge.svg)](https://github.com/chuckyLeeVIII/PolyPy--a-master-and-universal-guide-and-proof-of-work-to-polly-py-paradigm/actions)
+
+## Quick Start — Fullstack
+
+```bash
+# 1. Clone
+git clone https://github.com/chuckyLeeVIII/PolyPy--a-master-and-universal-guide-and-proof-of-work-to-polly-py-paradigm
+cd PolyPy--a-master-and-universal-guide-and-proof-of-work-to-polly-py-paradigm
+
+# 2. Install fullstack dependencies
+pip install -e ".[fullstack]"
+
+# 3. Start backend (API + dashboard)
+uvicorn backend.app:app --reload
+
+# 4. Open browser
+open http://localhost:8000         # Dashboard
+open http://localhost:8000/api/docs  # Swagger UI
+```
+
+## Quick Start — Pure Python (no server)
+
+```bash
+# Run any proof-of-work in pure Python simulation mode
+python proof_of_work_1_hello.py
+python proof_of_work_2_led_blink.py
+python proof_of_work_3_web.py
+python proof_of_work_4_graphics.py
+```
+
+## Repository Structure (PolyPi Pure)
+
+```
+.
+├── dytx/                    # DYTX v2.1 runtime (Thonny + Pure mode)
+├── backend/
+│   └── app.py               # FastAPI backend — /api/health, /api/runtime, /api/proofs
+├── frontend/
+│   ├── index.html           # DYTX dashboard
+│   ├── style.css            # Dark GitHub-themed CSS
+│   └── app.js               # Vanilla JS — fetch API, proof runner, runtime init
+├── .github/workflows/
+│   └── ci.yml               # GitHub Actions CI (syntax + smoke tests + API health)
+├── proof_of_work_1_hello.py
+├── proof_of_work_2_led_blink.py
+├── proof_of_work_3_web.py
+├── proof_of_work_4_graphics.py
+└── pyproject.toml           # polypi-pure v1.0.0
+```
+
+## DYTX IDE Modes
+
+| `ide=` | Environment | Use case |
+|--------|-------------|----------|
+| `"thonny"` | Thonny IDE + MicroPython | Real embedded hardware (RP2040, ESP32, …) |
+| `"pure"` | Standard CPython 3.10+ | Fullstack dev, CI, simulation, FastAPI |
+
+---
+
 # [PUBLIC ARCHIVE] - This repository is preserved as a universal guide and proof of work for the PolyPy paradigm.
 
 ---
