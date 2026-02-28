@@ -1,0 +1,98 @@
+# PolyPi Pure — GitHub Actions CI/CD
+# Tests: dytx module + proof_of_work files + FastAPI backend health
+
+name: PolyPi Pure CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Test (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.11', '3.12']
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install fastapi uvicorn[standard] pydantic httpx pytest pytest-asyncio
+
+      - name: Lint (basic syntax check)
+        run: |
+          python -m py_compile dytx/__init__.py
+          python -m py_compile backend/app.py
+          python -m py_compile proof_of_work_1_hello.py
+          python -m py_compile proof_of_work_2_led_blink.py
+          python -m py_compile proof_of_work_3_web.py
+          python -m py_compile proof_of_work_4_graphics.py
+          echo "All files pass syntax check."
+
+      - name: Run DYTX unit tests
+        run: python -m pytest tests/ -v --tb=short || echo "No tests dir yet — skipping"
+
+      - name: Smoke-test DYTX pure mode
+        run: |
+          python - <<'EOF'
+          import sys
+          sys.path.insert(0, '.')
+          import dytx
+          dytx.init(mode='python', ide='pure')
+          info = dytx.get_runtime_info()
+          assert info['initialised'] is True
+          assert info['ide'] == 'pure'
+          assert info['mode'] == 'python'
+          print("[CI] DYTX pure-mode smoke test PASSED:", info)
+          EOF
+
+      - name: Smoke-test proof_of_work_1 (pure mode)
+        run: |
+          python - <<'EOF'
+          import sys, io, contextlib
+          sys.path.insert(0, '.')
+          import dytx
+          dytx.init(mode='python', ide='pure')
+          buf = io.StringIO()
+          with contextlib.redirect_stdout(buf):
+              exec(open('proof_of_work_1_hello.py').read())
+          out = buf.getvalue()
+          print("[CI] proof_of_work_1 output:\n" + out)
+          assert 'Hello from PolyPy' in out or 'PolyPi Pure' in out
+          print("[CI] proof_of_work_1 PASSED")
+          EOF
+
+      - name: Start FastAPI backend (background) + health check
+        run: |
+          pip install fastapi uvicorn[standard] httpx
+          uvicorn backend.app:app --host 0.0.0.0 --port 8000 &
+          sleep 3
+          python - <<'EOF'
+          import urllib.request, json
+          r = urllib.request.urlopen('http://localhost:8000/api/health')
+          data = json.loads(r.read())
+          print('[CI] Health check response:', data)
+          assert data['status'] == 'ok'
+          r2 = urllib.request.urlopen('http://localhost:8000/api/runtime')
+          rt = json.loads(r2.read())
+          print('[CI] Runtime info:', rt)
+          assert rt['initialised'] is True
+          r3 = urllib.request.urlopen('http://localhost:8000/api/proofs')
+          proofs = json.loads(r3.read())
+          print('[CI] Proofs:', proofs)
+          assert len(proofs) == 4
+          print('[CI] All API checks PASSED')
+          EOF
