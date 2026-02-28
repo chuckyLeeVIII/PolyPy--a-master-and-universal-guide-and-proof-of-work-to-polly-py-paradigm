@@ -1,3 +1,7 @@
+# [PUBLIC ARCHIVE] - This repository is preserved as a universal guide and proof of work for the PolyPy paradigm.
+
+---
+
 *A White Paper on PolyPy: The Universal Python Paradigm*
 *Proof of Work Edition — Thonny IDE + MicroPython + DYTX Libraries*
 
@@ -5,7 +9,11 @@
 
 ## 1.0 Abstract
 
-This white paper introduces PolyPy (Polython), a new paradigm for Python development. Rather than a new language, PolyPy is a structured approach to writing Python that leverages its core syntax to serve as a universal language for all programming tasks — from high-level web development to low-level firmware and machine code.
+This white paper introduces PolyPy (Polython), a new paradigm for Python development. Rather than a new language, PolyPy is a structured approach # [PUBLIC ARCHIVE] - This repository is preserved as a universal guide and proof of work for the PolyPy paradigm.
+
+---
+
+to writing Python that leverages its core syntax to serve as a universal language for all programming tasks — from high-level web development to low-level firmware and machine code.
 
 **IMPORTANT: This paradigm is designed to run in Thonny IDE only.** Thonny's MicroPython interpreter and its built-in REPL environment are required for the machine-code comment convention to work correctly. Do not use VS Code, PyCharm, or any other IDE — the structured comment parsing and DYTX library integrations are Thonny-specific.
 
